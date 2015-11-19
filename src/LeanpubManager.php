@@ -15,8 +15,6 @@ class LeanpubManager
      */
     public $apiKey;
 
-    public $value;
-
     /**
      *  Instance of Guzzle Client
      * @var object
