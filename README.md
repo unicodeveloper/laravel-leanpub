@@ -79,10 +79,9 @@ Leanpub::getBook($book_slug)->id;
 
 Leanpub::getBook($book_slug)->about_the_book;
 // e.g sample $book_slug is phptherightway returns
-```html
+
  <p><em>There is no canonical way to use PHP</em>. This website aims to introduce new PHP developers to some topics which they may not discover until it is too late, and aims to give seasoned pros some fresh ideas on those topics they’ve been doing for years without ever reconsidering. This ebook will also not tell you which tools to use, but instead offer suggestions for multiple options, when possible explaining the differences in approach and use-case.</p>\r\n
-    <p>This is a living document and will continue to be updated with more helpful information and examples as they become available.</p>
-```
+ <p>This is a living document and will continue to be updated with more helpful information and examples as they become available.</p>
 
 Leanpub::getBook($book_slug)->title;
 // e.g sample $book_slug is phptherightway returns PHP: The "Right" Way
@@ -131,7 +130,6 @@ Leanpub::getBook($book_slug)->total_revenue;
 
 Leanpub::getBook($book_slug)->possible_reader_count;
 // e.g sample $book_slug is phptherightway returns 12052
-
 ```
 
 
