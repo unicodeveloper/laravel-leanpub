@@ -2,6 +2,7 @@
 
 [![Latest Stable Version](https://poser.pugx.org/unicodeveloper/laravel-leanpub/v/stable.svg)](https://packagist.org/packages/unicodeveloper/laravel-leanpub)
 [![License](https://poser.pugx.org/unicodeveloper/laravel-leanpub/license.svg)](LICENSE.md)
+![](https://img.shields.io/badge/unicodeveloper-approved-brightgreen.svg)
 [![Build Status](https://img.shields.io/travis/unicodeveloper/laravel-leanpub.svg)](https://travis-ci.org/unicodeveloper/laravel-leanpub)
 [![Quality Score](https://img.shields.io/scrutinizer/g/unicodeveloper/laravel-leanpub.svg?style=flat-square)](https://scrutinizer-ci.com/g/unicodeveloper/laravel-leanpub)
 [![Total Downloads](https://img.shields.io/packagist/dt/unicodeveloper/laravel-leanpub.svg?style=flat-square)](https://packagist.org/packages/unicodeveloper/laravel-leanpub)
