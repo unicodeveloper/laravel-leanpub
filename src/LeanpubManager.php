@@ -2,35 +2,55 @@
 
 namespace Unicodeveloper\Leanpub;
 
-use Illuminate\Support\Facades\Config;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Config;
+use Unicodeveloper\Leanpub\Exceptions\SlugDoesNotExist;
+use Unicodeveloper\Leanpub\Exceptions\BookDoesNotExist;
 
 class LeanpubManager
 {
-
     /**
-     * [$client description]
-     * @var [type]
-     */
-    protected $client;
-
-    /**
-     * [$response description]
-     * @var [type]
-     */
-    protected $response;
-
-    /**
-     * Unofficial Codepen API
-     * Source: http://cpv2api.com/
+     * Leanpub Api Key
      * @var string
      */
-    protected $baseUrl = 'http://cpv2api.com';
+    public $apiKey;
 
+    public $value;
+
+    /**
+     *  Instance of Guzzle Client
+     * @var object
+     */
+    public $client;
+
+    /**
+     * Response from the Leanpub API Service
+     * @var object
+     */
+    public $response;
+
+    /**
+     * Leanpub base Url
+     * @var string
+     */
+    protected $baseUrl = 'https://leanpub.com';
+
+    /**
+     * Set the Api Key and Request Options to make a request here in the constructor
+     */
     public function __construct()
     {
+        $this->setApiKey();
         $this->setRequestOptions();
-        $this->setResponse('/me');
+    }
+
+    /**
+     * Get apiKey from Config file
+     * @return void
+     */
+    public function setApikey()
+    {
+        $this->apiKey = Config::get('leanpub.API_KEY');
     }
 
     /**
@@ -49,155 +69,36 @@ class LeanpubManager
      */
     public function setResponse($relativeUrl)
     {
-        $this->response = $this->client->get($this->baseUrl . $relativeUrl, []);
+        $this->response = $this->client->get($this->baseUrl . $relativeUrl . "?api_key={$this->apiKey}", []);
     }
 
     /**
-     * Set the url for getting the most popular pens
+     * Get my book
+     * @param  string $slug
      * @return object
      */
-    public function getMostPopularPens()
+    public function getBook($slug)
     {
-        $this->setResponse('/pens/popular');
+        if(empty($slug))
+        {
+            throw new SlugDoesNotExist('No slug was found. Please enter the book slug');
+        }
+
+        $this->setResponse("/{$slug}.json");
 
         return $this->data();
     }
 
     /**
-     * Get the latest Picked Pens - Fetches 12 results
-     * @return array
-     */
-    public function getLatestPickedPens()
-    {
-        $this->setResponse('/pens/picks');
-
-        return $this->data();
-    }
-
-    /**
-     * Get the most recently created pens - Fetches 12 results
-     * @return array
-     */
-    public function getRecentlyCreatedPens()
-    {
-        $this->setResponse('/pens/recent');
-
-        return $this->data();
-    }
-
-    /**
-     * Get the profile of a Codepen User
-     * @param  $username
-     * @return object
-     */
-    public function getProfile($username)
-    {
-        $this->setResponse('/profile/' . $username);
-
-        return $this->data();
-    }
-
-    /**
-     * Get a user's loved posts
-     * @param  $username
-     * @return array
-     */
-    public function getLovedPosts($username)
-    {
-        $this->setResponse('/posts/loved/' . $username);
-
-        return $this->data();
-    }
-
-    /**
-     * Get a user's popular posts
-     * @param  $username
-     * @return array
-     */
-    public function getPopularPosts($username)
-    {
-        $this->setResponse('/posts/popular/' . $username);
-
-        return $this->data();
-    }
-
-    /**
-     * Get a user's published posts
-     * @param  $username
-     * @return array
-     */
-    public function getPublishedPosts($username)
-    {
-        $this->setResponse('/posts/published/' . $username);
-
-        return $this->data();
-    }
-
-    /**
-     * Get a user's loved pens
-     * @param  $username
-     * @return array
-     */
-    public function getLovedPens($username)
-    {
-        $this->setResponse('/pens/loved/' . $username);
-
-        return $this->data();
-    }
-
-    /**
-     * Get a user's popular pens
-     * @param  $username
-     * @return array
-     */
-    public function getPopularPens($username)
-    {
-        $this->setResponse('/pens/popular/' . $username);
-
-        return $this->data();
-    }
-
-    /**
-     * Get a user's public pens
-     * @param  $username
-     * @return array
-     */
-    public function getPublicPens($username)
-    {
-        $this->setResponse('/pens/public/' . $username);
-
-        return $this->data();
-    }
-
-    /**
-     * Get a user's forked pens
-     * @param  $username
-     * @return array
-     */
-    public function getForkedPens($username)
-    {
-        $this->setResponse('/pens/forked/' . $username);
-
-        return $this->data();
-    }
-
-    /**
-     * Get a user's details and access each attribute like username, avatar, location, bio etc
-     * @param  string $username
-     * @return object
-     */
-    public function user($username)
-    {
-        return $this->getProfile($username);
-    }
-
-    /**
-     *  Get the details of the required request
+     * Get the details of the required request
      * @return object
      */
     private function data()
     {
         $result = json_decode($this->response->getBody());
-        return $result->data;
+
+        $result->isFree = number_format($result->minimum_price, 2) == 0.0;
+
+        return $result;
     }
 }
