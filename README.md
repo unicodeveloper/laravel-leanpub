@@ -1,4 +1,4 @@
-# laravel-codepen
+# laravel-leanpub
 
 [![Latest Stable Version](https://poser.pugx.org/unicodeveloper/laravel-leanpub/v/stable.svg)](https://packagist.org/packages/unicodeveloper/laravel-leanpub)
 [![License](https://poser.pugx.org/unicodeveloper/laravel-leanpub/license.svg)](LICENSE.md)
