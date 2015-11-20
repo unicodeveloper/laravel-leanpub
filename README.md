@@ -54,6 +54,27 @@ This package also comes with a facade
 ]
 ```
 
+Publish the config file by running:
+
+```bash
+php artisan vendor:publish
+```
+
+The config file will now be located at `config/leanpub.php`.
+
+## Configuration
+
+This is the `leanpub.php` file in the `config` directory.
+
+```php
+/**
+ *  Config file that a developer can insert the api key from Leanpub
+ */
+return [
+    'API_KEY' => ''
+];
+```
+
 ## Usage
 
 You'll need your book slug and API key values, both of which can be retrieved by [accessing your Leanpub account](https://leanpub.com/dashboard).
