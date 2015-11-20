@@ -87,6 +87,18 @@ class LeanpubManager
         return $this->data();
     }
 
+    public function getSalesInfo($slug)
+    {
+        if(empty($slug))
+        {
+            throw new SlugDoesNotExist('No slug was found. Please enter the book slug');
+        }
+
+        $this->setResponse("/{$slug}/sales.json");
+
+        return $this->data();
+    }
+
     /**
      * Get the details of the required request
      * @return object
@@ -95,7 +107,14 @@ class LeanpubManager
     {
         $result = json_decode($this->response->getBody());
 
-        $result->isFree = number_format($result->minimum_price, 2) == 0.0;
+        $mediatorResult = (isset($result->minimum_price)) ? $result->minimum_price : 'absent';
+
+        if($mediatorResult == 'absent')
+        {
+            return $result;
+        }
+
+        $result->isFree = number_format($mediatorResult, 2) == 0.0;
 
         return $result;
     }
