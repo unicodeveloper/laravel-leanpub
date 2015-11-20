@@ -49,7 +49,7 @@ This package also comes with a facade
 
 'aliases' => [
     ...
-    'Codepen' => Unicodeveloper\Leanpub\Facades\Leanpub::class,
+    'Leanpub' => Unicodeveloper\Leanpub\Facades\Leanpub::class,
     ...
 ]
 ```
