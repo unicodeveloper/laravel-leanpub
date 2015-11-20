@@ -75,6 +75,8 @@ Here you can see an example of just how simple this package is to use.
 use Unicodeveloper\Leanpub\Facades\Leanpub;
 // or you can alias this in config/app.php like I mentioned initially above
 
+Book Summary Data
+
 Leanpub::getBook($book_slug)->id;
 // e.g sample $book_slug is phptherightway returns 11146
 
@@ -131,6 +133,21 @@ Leanpub::getBook($book_slug)->total_revenue;
 
 Leanpub::getBook($book_slug)->possible_reader_count;
 // e.g sample $book_slug is phptherightway returns 12052
+
+Sales Summary Data
+
+Leanpub::getSalesInfo($book_slug)->book
+Leanpub::getSalesInfo($book_slug)->url
+Leanpub::getSalesInfo($book_slug)->total_author_royalties
+Leanpub::getSalesInfo($book_slug)->total_book_royalties
+Leanpub::getSalesInfo($book_slug)->num_happy_readers
+Leanpub::getSalesInfo($book_slug)->num_happy_paid_purchases
+Leanpub::getSalesInfo($book_slug)->num_refunded_purchases
+Leanpub::getSalesInfo($book_slug)->unpaid_royalties
+Leanpub::getSalesInfo($book_slug)->royalties_currently_due
+Leanpub::getSalesInfo($book_slug)->royalties_due_on_first_of_next_month
+Leanpub::getSalesInfo($book_slug)->paid_royalties
+
 ```
 
 
